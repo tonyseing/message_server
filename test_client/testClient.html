@@ -14,11 +14,9 @@ $(document).ready(function() {
 	serverSocket.on('connect', function() {
 		console.log('client connected to server socket');
 		$('input#send_message').click(send_chat_message);
-		
-
-		
-
 	});
+
+
 
 	send_chat_message = function () {
 				console.log('send_message button clicked');

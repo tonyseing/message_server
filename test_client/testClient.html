@@ -1,0 +1,64 @@
+<html>
+<head>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>
+	<script src='./socket.io.min.js'></script>
+</head>
+
+<body>
+<script type='text/javascript'>
+
+$(document).ready(function() {
+
+	var serverSocket = io.connect('http://172.30.11.109:8001');
+	
+	serverSocket.on('connect', function() {
+		console.log('client connected to server socket');
+		$('input#send_message').click(send_chat_message);
+		
+
+		
+
+	});
+
+	send_chat_message = function () {
+				console.log('send_message button clicked');
+				var inputMessage = { };
+				inputMessage.content = $('input#message_text').val();
+					
+					
+				// display your entry
+				$('#messages').append('<div>' + inputMessage.content + '</div>');
+				// cleart input
+				$('input#message_text').val('');
+					
+				console.log(inputMessage.content);
+				serverSocket.emit('message', inputMessage);
+		}
+
+	serverSocket.on('message', function(message) {
+		console.log('message event detected from serverSocket');
+		$('#messages').append('<div>' + message.content + '</div>');
+	});
+
+
+
+});
+
+
+
+	
+
+	
+	
+
+
+
+</script>
+<div id="messages">
+</div>
+<input type='textarea' id='message_text' cols="5" width="300"/>
+<input type="submit" id='send_message'/>
+</body>
+
+
+</html>

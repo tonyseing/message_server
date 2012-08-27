@@ -30,7 +30,6 @@ message_server = function() {
 		server = require('http').createServer(express);
 
 	var io = socket.listen(server);
-	server.listen(message_server_port);
 
 	// start express server listening
 	server.listen(message_server_port, function() {

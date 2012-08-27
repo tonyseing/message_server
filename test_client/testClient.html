@@ -9,7 +9,7 @@
 
 $(document).ready(function() {
 
-	var serverSocket = io.connect('http://172.30.11.109:8001');
+	var serverSocket = io.connect('http://127.0.0.1:8003');
 	
 	serverSocket.on('connect', function() {
 		console.log('client connected to server socket');

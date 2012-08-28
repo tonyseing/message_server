@@ -11,12 +11,27 @@ $(document).ready(function() {
 
 	var serverSocket = io.connect('http://127.0.0.1:8003');
 	
+	/* functionality for sending chat messages
 	serverSocket.on('connect', function() {
 		console.log('client connected to server socket');
 		$('input#send_message').click(send_chat_message);
 	});
+	*/
+
+	// functionality for notifications
+	serverSocket.on('connect', function() {
+		console.log('client connected to server socket');
+//		$('input#send_message').click(send_chat_message);
+		subscribe_to_notifications('tony.seing@gmail.com');
+
+	});
 
 
+	subscribe_to_notifications = function (email) {
+		serverSocket.emit('subscribe', 'tony.seing@gmail.com');
+		console.log('subscribe_to_notifications();', email);
+
+	}
 
 	send_chat_message = function () {
 				console.log('send_message button clicked');
@@ -38,9 +53,16 @@ $(document).ready(function() {
 		$('#messages').append('<div>' + message.content + '</div>');
 	});
 
+	serverSocket.on('notification', function(notification) {
+		console.log('notification event detected from serverSocket');
+		//$('#messages').append('<div>' + notification + '</div>');
+		console.log('notification:', notification);
+	});
+
 
 
 });
+
 
 
 

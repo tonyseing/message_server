@@ -41,20 +41,33 @@ message_server = function() {
 
 	var redisClient = redis.createClient(redis_port, redis_host);
 
-	redisClient.on('ready', function() {
-		console.log('Redis client connected to server ' + redis_host + ':' + redis_port);	
-	});
+	
 
 
 
 	io.sockets.on('connection', function (client_socket) {
 		client_socket.emit('message', { content: 'Hi there, this is server. Welcome to the chat.'});
 		
-
+		// chat functionality -- publish messages as they're sent from clients
 		client_socket.on('message', function(message) {
 			console.log('client_socket.on: message --' + message.content);
 			client_socket.broadcast.emit('message', message);
 		});
+
+		// notification functionality
+		client_socket.on('subscribe', function(channel) {
+			console.log('client_socketon subscribe');
+			redisClient.on('ready', function() {
+				console.log('Redis client connected to server ' + redis_host + ':' + redis_port);
+				redisClient.subscribe(channel);
+				console.log('Redis client subscribed to  ' + channel);
+
+				redisClient.on('message', function(channel, message) {
+					client_socket.emit('notification', message);	
+				});
+			});
+		});	
+
 	});
 
 

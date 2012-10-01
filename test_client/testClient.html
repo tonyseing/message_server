@@ -11,12 +11,12 @@ $(document).ready(function() {
 
 	var serverSocket = io.connect('http://127.0.0.1:8003');
 	
-	/* functionality for sending chat messages
+	// functionality for sending chat messages
 	serverSocket.on('connect', function() {
 		console.log('client connected to server socket');
 		$('input#send_message').click(send_chat_message);
 	});
-	*/
+	
 
 	// functionality for notifications
 	serverSocket.on('connect', function() {

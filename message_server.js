@@ -56,7 +56,7 @@ message_server = function() {
 
 		// notification functionality
 		client_socket.on('subscribe', function(channel) {
-			console.log('client_socketon subscribe');
+			console.log('client_socket on subscribe');
 			redisClient.on('ready', function() {
 				console.log('Redis client connected to server ' + redis_host + ':' + redis_port);
 				redisClient.subscribe(channel);

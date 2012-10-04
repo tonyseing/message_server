@@ -39,7 +39,6 @@ message_server = function() {
 
 
 
-	var redisClient = redis.createClient(redis_port, redis_host);
 
 	
 
@@ -56,6 +55,9 @@ message_server = function() {
 
 		// notification functionality
 		client_socket.on('subscribe', function(channel) {
+			// this should be in here to fix race condition
+			var redisClient = redis.createClient(redis_port, redis_host);
+
 			console.log('client_socket on subscribe');
 			redisClient.on('ready', function() {
 				console.log('Redis client connected to server ' + redis_host + ':' + redis_port);

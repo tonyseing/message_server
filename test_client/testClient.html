@@ -28,7 +28,7 @@ $(document).ready(function() {
 
 
 	subscribe_to_notifications = function (email) {
-		serverSocket.emit('subscribe', 'tony.seing@gmail.com');
+		serverSocket.emit('subscribe', email);
 		console.log('subscribe_to_notifications();', email);
 
 	}
